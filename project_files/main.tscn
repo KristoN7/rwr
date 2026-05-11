@@ -1,31 +1,64 @@
 [gd_scene format=3 uid="uid://de6a7lqwa8r0m"]
 
 [ext_resource type="Script" uid="uid://b3i1s2dwisxdf" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://ctmabw1tgouog" path="res://xr_origin_3d.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://bcjjdqaot5j1x" path="res://right_controller.gd" id="3_h2yge"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_noarx"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+size = Vector3(0.09, 0.02, 0.1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_a0tk4"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="CylinderMesh" id="CylinderMesh_1bvp3"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1bvp3"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lquwl"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_272bh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5vw27"]
+size = Vector3(1, 0.5, 1)
+
+[sub_resource type="Environment" id="Environment_kek77"]
 
 [node name="Node3D" type="Node3D" unique_id=625062353]
 script = ExtResource("1_ig7tw")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1491562335]
+script = ExtResource("2_0xm2m")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=380123902]
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=438974609]
 tracker = &"left_hand"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController" unique_id=1606900670]
-mesh = SubResource("BoxMesh_noarx")
+[node name="HandLeftRoot" type="Node3D" parent="XROrigin3D/LeftController" unique_id=385984313]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController/HandLeftRoot" unique_id=1406453500]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+mesh = SubResource("BoxMesh_h2yge")
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=1376794270]
 tracker = &"right_hand"
+script = ExtResource("3_h2yge")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController" unique_id=945047963]
-mesh = SubResource("BoxMesh_a0tk4")
+[node name="HandRightRoot" type="Node3D" parent="XROrigin3D/RightController" unique_id=823242863]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController/HandRightRoot" unique_id=461553652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="TeleportRay" type="RayCast3D" parent="XROrigin3D/RightController" unique_id=295383641]
+target_position = Vector3(0, 0, -10)
+
+[node name="TeleportMarker" type="MeshInstance3D" parent="XROrigin3D/RightController/TeleportRay" unique_id=2069116296]
+mesh = SubResource("CylinderMesh_1bvp3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1289818764]
 
@@ -33,3 +66,32 @@ mesh = SubResource("BoxMesh_a0tk4")
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Enter VR"
+
+[node name="Level" type="Node3D" parent="." unique_id=379010899]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Level" unique_id=329836997]
+transform = Transform3D(0.86670053, 0, 0, 0, 0.86670053, 0, 0, 0, 0.86670053, -0.0066212416, 0, 0.00028586388)
+mesh = SubResource("PlaneMesh_1bvp3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/MeshInstance3D" unique_id=2130725635]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/MeshInstance3D/StaticBody3D" unique_id=1227150138]
+shape = SubResource("BoxShape3D_lquwl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Level" unique_id=308551422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06619, 0, -1.703883)
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Level" unique_id=65615200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.7390327)
+mesh = SubResource("CylinderMesh_272bh")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Level" unique_id=1619735258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.83203, -1.1920929e-07, -0.6939182)
+mesh = SubResource("BoxMesh_5vw27")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=23446572]
+transform = Transform3D(0.89202297, 0.85760343, 0.4036286, -2.6273699, 0.22712979, 0.25881904, 0.36461383, -0.4614416, 0.8775515, 0.4167784, 1.2150033, 2.9488654)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=322039879]
+environment = SubResource("Environment_kek77")
