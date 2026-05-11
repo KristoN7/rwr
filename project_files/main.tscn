@@ -57,7 +57,7 @@ mesh = SubResource("BoxMesh_h2yge")
 [node name="TeleportRay" type="RayCast3D" parent="XROrigin3D/RightController" unique_id=295383641]
 target_position = Vector3(0, 0, -10)
 
-[node name="TeleportMarker" type="MeshInstance3D" parent="XROrigin3D/RightController/TeleportRay" unique_id=2069116296]
+[node name="TeleportMarker" type="MeshInstance3D" parent="XROrigin3D/RightController" unique_id=2069116296]
 mesh = SubResource("CylinderMesh_1bvp3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1289818764]
